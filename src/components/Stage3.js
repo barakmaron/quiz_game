@@ -28,9 +28,9 @@ const Stage3 = ({ category }) => {
       <h3>Select category:</h3> 
       <div className='categories'>
         {categories.trivia_categories.map((cat, i) => {
-            let position = cat.name.search('Entertainment:') == 0 ? 15 : -1;
-            position = position == -1 && cat.name.search('Science:') == 0 ? 9 : position;
-            cat.name = position != -1 ? cat.name.substr(position) : cat.name;
+            let position = cat.name.search('Entertainment:') === 0 ? 15 : -1;
+            position = position === -1 && cat.name.search('Science:') === 0 ? 9 : position;
+            cat.name = position !== -1 ? cat.name.substr(position) : cat.name;
             
             return(<Button key={i} text={cat.name} id={cat.id} color={color[i % 7]} onClick={handleCategorySelection}></Button>);
         })}

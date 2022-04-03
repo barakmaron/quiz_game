@@ -2,7 +2,7 @@ import { React, useState } from 'react';
 import Button from './Button';
 
 const Stage1 = ({ setPlayersNames }) => {
-    const [playerNamesInput, addPlayer] = useState([{ id: 1 }]);
+    const [playerNamesInput, addPlayer] = useState([{}]);
 
     const addPlayerInput = (e) => {
         e.preventDefault();
