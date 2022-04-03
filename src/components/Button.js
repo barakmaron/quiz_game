@@ -1,11 +1,11 @@
-import { useEffect, React } from 'react';
+import { React } from 'react';
 import PropTypes from 'prop-types';
 
 import '../css/Button.scss';
 
 const Button = ({ id, color, text, onClick}) => {  
     let style = {};         
-    if(color != 'f857a8')
+    if(color !== 'f857a8')
     {        
         const color2 = GetColor(color);
         color = '#' + color;
