@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import '../css/Button.scss';
 
-const Button = ({ id, color, text, onClick}) => {  
+const Button = ({ id, color, text, onClick, addCostumeWidth }) => {  
     let style = {};         
     if(color !== 'f857a8')
     {        
@@ -12,7 +12,7 @@ const Button = ({ id, color, text, onClick}) => {
         style = {background: "linear-gradient(37deg, " + color + "," + color2 +")"};
     }
   return (
-    <button id={id} onClick={onClick}> 
+    <button id={id} onClick={onClick} style={{"width": addCostumeWidth}}> 
         <span id={id}>{text}</span>
         <div id={id} className="buttonColoring" style={style}></div>
     </button>

@@ -32,7 +32,7 @@ const Stage3 = ({ category }) => {
             position = position === -1 && cat.name.search('Science:') === 0 ? 9 : position;
             cat.name = position !== -1 ? cat.name.substr(position) : cat.name;
             
-            return(<Button key={i} text={cat.name} id={cat.id} color={color[i % 7]} onClick={handleCategorySelection}></Button>);
+            return(<Button key={i} addCostumeWidth='20%' text={cat.name} id={cat.id} color={color[i % 7]} onClick={handleCategorySelection}></Button>);
         })}
       </div>
     </div>
