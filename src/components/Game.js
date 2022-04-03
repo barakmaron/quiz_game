@@ -42,10 +42,12 @@ const Game = () => {
     setCategory(cat);
     stages[1].visible = false;
     stages[2].visible = true;
+    console.log(category);
   }
 
   return (
     <div>
+      <h1 className='title'>QUIZ GAME</h1>
       {stages[0].visible && <Stage1 setPlayersNames={addPlayers}></Stage1>}
       {stages[1].visible && <Stage2 difficulty={handlerDifficulty}></Stage2>}
       {stages[2].visible && <Stage3 category={handlerCategory}></Stage3>}

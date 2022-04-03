@@ -14,6 +14,7 @@ button
     overflow: hidden;
     border-radius: 5px;
     border: none;
+    margin: 10px auto;
 }
 
 button span 
@@ -40,6 +41,10 @@ button:hover .buttonColoring
     top: -120px;
 }
 
+button:hover span
+{
+    color: black;
+}
 .buttonColoring 
 {
     background-size: 400% 400%;
