@@ -3,10 +3,14 @@ import PropTypes from 'prop-types';
 
 import '../css/Button.scss';
 
-const Button = ({ id, color, text, onClick}) => {   
-    const color2 = GetColor(color);
-    color = '#' + color;
-    const style = {background: "linear-gradient(37deg, " + color + "," + color2 +")"}
+const Button = ({ id, color, text, onClick}) => {  
+    let style = {};         
+    if(color != 'f857a8')
+    {        
+        const color2 = GetColor(color);
+        color = '#' + color;
+        style = {background: "linear-gradient(37deg, " + color + "," + color2 +")"};
+    }
   return (
     <button id={id} onClick={onClick}> 
         <span id={id}>{text}</span>
@@ -30,7 +34,7 @@ function GetColor(color)
 {    
     var hex_color = parseInt(color, 16);
     var color_secondary;
-    hex_color += parseInt('700B0');
+    hex_color += parseInt('70bff');
     color_secondary = hex_color.toString(16);  
     color_secondary = '#' + color_secondary;
     return color_secondary;
