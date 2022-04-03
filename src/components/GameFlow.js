@@ -6,6 +6,7 @@ import '../css/GameFlow.scss'
 import Button from './Button'
 
 const GameFlow = ({ players, questionsResult }) => {
+    const color = ['35afe9', 'bd35e9', 'e9a135','355ce9']
     const [score, setScore] = useState([])
     const [round, setRound] = useState(0)
     const [turn, setTurn] = useState(0)
@@ -86,8 +87,8 @@ const GameFlow = ({ players, questionsResult }) => {
             {questions.map((q, i) => {
                 if(countQuestion === i)
                 {
-                    const answers = q.answers.map((ans, j) =>{return(<Button key={j} text={ans} id={ans} onClick={handleAnswerClick}></Button>)})
-                    return(<div key={i}><h3>{q.question}</h3>{answers}</div>)
+                    const answers = q.answers.map((ans, j) =>{return(<Button addCostumeWidth='35%' color={color[j% 4]} key={j} text={ans} id={ans} onClick={handleAnswerClick}></Button>)})
+                    return(<div key={i}><h3>{q.question}</h3><div  className='answers'>{answers}</div></div>)
                 }
             })}
         </div>    

@@ -13,12 +13,26 @@
 .questionSection
 {
     margin: 0 auto;
-    width: max-content;
 }
 
 .questionSection h3
 {
-    width: max-content;
-    font-size: 1.5rem;
-    
+    font-size: 1.5rem;  
+    white-space: initial;  
+}
+
+.answers
+{
+    display: inline-flex;
+    justify-items: start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: center;
+    padding: 0px 10px;
+}
+
+.answers button
+{
+    margin: 10px 5px;
 }
