@@ -1,24 +1,40 @@
 import { React, useState, useEffect } from 'react'
-import { FaStar, FaPlay, FaUserAstronaut } from 'react-icons/fa'
-import { Buffer } from 'buffer'
-
-import '../css/GameFlow.scss'
+import { FaStar, FaPlay, FaUserAstronaut } from 'react-icons/fa';
+import { AiFillSetting } from 'react-icons/ai';
+import { Buffer } from 'buffer';
 import Button from './Button'
 
+import '../css/GameFlow.scss'
+import CorrectSound from '../assets/CorrectAnswerSound.mp3';
+import IncorrectSound from '../assets/IncorrectAnswerSound.mp3';
+
 const GameFlow = ({ players, questionsResult }) => {
-    const color = ['35afe9', 'bd35e9', 'e9a135','355ce9']
-    const [score, setScore] = useState([])
-    const [round, setRound] = useState(0)
-    const [turn, setTurn] = useState(0)
-    const [countQuestion, setCountQuestion] = useState(0)
-    const [questions, setQuestions] = useState([{question: '-1', answers: []}])
-    
+    const color = ['35afe9', 'bd35e9', 'e9a135','355ce9'];
+    const correctAnswerSound = new Audio(CorrectSound);
+    const incorrectAnswerSound = new Audio(IncorrectSound);
+
+    const [score, setScore] = useState([]);
+    const [round, setRound] = useState(0);
+    const [turn, setTurn] = useState(0);
+    const [countQuestion, setCountQuestion] = useState(0);
+    const [questions, setQuestions] = useState([{question: '-1', answers: []}]);
+    const [settings, setSettings] = useState({ soundEffect: true, backgroundSound: true});
+
+
     function shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [array[i], array[j]] = [array[j], array[i]];
         }
     }
+
+    function delay(delayMs) {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            resolve(2);
+          }, delayMs);
+        });
+      }
 
     useEffect(() =>
     {
@@ -45,9 +61,30 @@ const GameFlow = ({ players, questionsResult }) => {
             })                       
         }
         decodeQuestions();
+        
         console.log(questions)
         console.log(score)
-    }, []);
+    }, []);   
+
+    async function correctAnswerHandle(e) 
+    {
+        settings.soundEffect ? correctAnswerSound.play() : correctAnswerSound.pause();
+        let delayres = await delay(500);
+        e.target.parentElement.className += ' correctAnswer';        
+        delayres = await delay(2500);
+        correctAnswerSound.pause();
+        setCountQuestion(countQuestion + 1);
+    }
+
+    async function incorrectAnswerHandle(e) 
+    {
+        settings.soundEffect ? incorrectAnswerSound.play() : incorrectAnswerSound.pause();
+        let delayres = await delay(500);
+        e.target.parentElement.className += ' incorrectAnswer';
+        delayres = await delay(2500);
+        incorrectAnswerSound.pause();
+        setCountQuestion(countQuestion + 1);
+    }
 
     function handleAnswerClick(e)
     {
@@ -59,11 +96,17 @@ const GameFlow = ({ players, questionsResult }) => {
                 newArr[turn] += 30;          
                 return newArr;
               })
+              correctAnswerHandle(e);              
+        }
+        else
+        {
+            incorrectAnswerHandle(e);
         }
         if(turn + 1 === players.length)
         {
             setTurn(0);
             setRound(round + 1);
+            
         }
         else
         {
@@ -74,11 +117,12 @@ const GameFlow = ({ players, questionsResult }) => {
             ///end of game
             setRound(0)
         }
-        setCountQuestion(countQuestion + 1);
+        
     }
   return (
     <div className='gameContainer'>
         <div className='gameStatistics'>
+            <div className='settings'><AiFillSetting style={{color: '#fd5252', cursor: 'pointer'}}></AiFillSetting></div>
             <div className='playerName'><FaUserAstronaut style={{color: '#009fff'}}></FaUserAstronaut> {players[turn].value}</div>
             <div className='score'><FaStar style={{color: '#ffed00'}}></FaStar> {score[turn]}</div>
             <div className='round'><FaPlay style={{color: '#18ab46'}}></FaPlay> {round + 1}/5</div>    
