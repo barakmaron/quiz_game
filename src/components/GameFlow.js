@@ -25,7 +25,7 @@ const GameFlow = ({ players, questionsResult, finishedGame }) => {
     const [questions, setQuestions] = useState([{question: '-1', answers: []}]);
     const [settings, setSettings] = useState({ soundEffect: true, backgroundSound: true});
     const timePerQuestion = 30;
-    const [clickedAnswer, setClickedAnswer] = useState(false);
+    const [clickedAnswer, setClickedAnswer] = useState(false);    
 
     useEffect(() =>
     {
@@ -99,15 +99,11 @@ const GameFlow = ({ players, questionsResult, finishedGame }) => {
         {
             setTurn(0);            
             round += 1;
-            if(round === 4)
+            if(round === 5)
             {
                 finishedGame(score); 
                 return;
-            }
-            else
-            {
-                return round + 1;
-            }
+            }            
         }
         else
         {
