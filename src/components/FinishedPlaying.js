@@ -5,10 +5,10 @@ import Button from './Button';
 
 import '../css/FinishedPlaying.scss';
 
-const FinishedPlaying = ({players, score, playAgain}) => {
+const FinishedPlaying = ({players, score}) => {
     let place = '';
     const color = ['2eb952', '35afe9', 'bd35e9', 'e9a135', '8bb722', 'e93535', '355ce9'];
-    const placeColor = ['gold', 'silver', 'bronze'];
+    const placeColor = ['gold', 'silver', '#CD7F32'];
   return (<>
     <div className='finishedPlaying'>        
       {score.map((playerScore, i) =>
@@ -27,8 +27,7 @@ const FinishedPlaying = ({players, score, playAgain}) => {
             <span><FaStar style={{color: 'gold'}}></FaStar> {playerScore}</span>            
         </div>)
       })}       
-    </div>
-    <Button text="play again" color='66dd50' onClick={playAgain}></Button>
+    </div>    
     </>
   )
 }

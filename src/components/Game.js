@@ -22,6 +22,7 @@ const Game = () => {
   const [difficulty, setDifficulty] = useState('');
   const [category, setCategory] = useState(0);
   const [score, setScore] = useState([0]);
+  const [playAgain, setPlayAgain] = useState(false)
 
   const addPlayers = (playersNames) => 
   {
@@ -32,6 +33,7 @@ const Game = () => {
         return [...s, {value: player.value}];        
       });
     });   
+    rerender(!render);
   }
 
   function handlerDifficulty (level)
@@ -39,6 +41,7 @@ const Game = () => {
     stages[1].visible = false;
     stages[2].visible = true;
     setDifficulty(level);
+    rerender(!render);
   }
 
   function handlerCategory (cat)
@@ -46,6 +49,7 @@ const Game = () => {
     stages[2].visible = false;
     stages[3].visible = true;
     setCategory(cat);
+    rerender(!render);
   }
 
   function handlerGameFinished (score)
@@ -53,21 +57,7 @@ const Game = () => {
     stages[3].visible = false;
     stages[4].visible = true;
     setScore(score);
-  }
-
-  function handlePlayAgain()
-  {
-    stages[4].visible = false; 
-    stages[3].visible = true; 
-    players.map((player, i) => {
-      setScore(s => {
-        const newArr = s.slice();
-          newArr[i] = 0;
-    
-          return newArr;        
-      });
-    });  
-    rerender(!render); 
+    rerender(!render);
   }
 
   return (
@@ -76,8 +66,8 @@ const Game = () => {
       {stages[0].visible && <Stage1 setPlayersNames={addPlayers}></Stage1>}
       {stages[1].visible && <Stage2 difficulty={handlerDifficulty}></Stage2>}
       {stages[2].visible && <Stage3 category={handlerCategory}></Stage3>}
-      {stages[3].visible && <Quiz category={category} difficulty={difficulty} players={players} finished={handlerGameFinished}></Quiz>}
-      {stages[4].visible && <FinishedPlaying players={players} score={score} playAgain={handlePlayAgain}></FinishedPlaying>}
+      {stages[3].visible && <Quiz category={category} difficulty={difficulty} players={players} finished={handlerGameFinished} playAgain={playAgain}></Quiz>}
+      {stages[4].visible && <FinishedPlaying players={players} score={score}></FinishedPlaying>}
     </div>
   )
 }
