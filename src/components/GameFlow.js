@@ -10,7 +10,9 @@ import CorrectSound from '../assets/CorrectAnswerSound.mp3';
 import IncorrectSound from '../assets/IncorrectAnswerSound.mp3';
 import QuestionTimer from './QuestionTimer';
 
-const GameFlow = ({ players, questionsResult }) => {
+let round = 0;
+
+const GameFlow = ({ players, questionsResult, finishedGame }) => {
     const color = ['35afe9', 'bd35e9', 'e9a135','355ce9'];
     const correctAnswerSound = new Audio(CorrectSound);
     const incorrectAnswerSound = new Audio(IncorrectSound);
@@ -18,12 +20,12 @@ const GameFlow = ({ players, questionsResult }) => {
     const ref = useRef(null);
 
     const [score, setScore] = useState([]);
-    const [round, setRound] = useState(0);
     const [turn, setTurn] = useState(0);
     const [countQuestion, setCountQuestion] = useState(0);
     const [questions, setQuestions] = useState([{question: '-1', answers: []}]);
     const [settings, setSettings] = useState({ soundEffect: true, backgroundSound: true});
-    const [timePerQuestion, setTimePerQuestion] = useState(30);
+    const timePerQuestion = 30;
+    const [clickedAnswer, setClickedAnswer] = useState(false);
 
     useEffect(() =>
     {
@@ -50,65 +52,86 @@ const GameFlow = ({ players, questionsResult }) => {
             })                       
         }
         decodeQuestions();
-        
-        console.log(questions)
-        console.log(score)
     }, []);   
 
     async function correctAnswerHandle(e) 
     {
+        setScore(s => {
+            const newArr = s.slice();
+            newArr[turn] += (30 * document.getElementById('timer' + countQuestion).getAttribute('value')) >> 0;          
+            return newArr;
+          })
         settings.soundEffect ? correctAnswerSound.play() : correctAnswerSound.pause();
-        let delayres = await delay(500);
+        let delayRes = await delay(500);
         e.target.parentElement.className += ' correctAnswer';        
-        delayres = await delay(2500);
+        delayRes = await delay(2000)
+        setClickedAnswer(false);            
         correctAnswerSound.pause();
-        setCountQuestion(countQuestion + 1);
-        ref.current.clearState(timePerQuestion);        
+        ref.current.clearState(timePerQuestion);
+        return Promise;
     }
 
     async function incorrectAnswerHandle(e) 
     {
         settings.soundEffect ? incorrectAnswerSound.play() : incorrectAnswerSound.pause();
-        let delayres = await delay(500);
+        let delayRes = await delay(500);
         e.target.parentElement.className += ' incorrectAnswer';
-        delayres = await delay(2500);
+        document.getElementById(questions[countQuestion].correct_answer).className += ' correctAnswer';      
+        delayRes = await delay(2000);         
+        setClickedAnswer(false);
         incorrectAnswerSound.pause();
-        setCountQuestion(countQuestion + 1);
-        ref.current.clearState(timePerQuestion); 
+        ref.current.clearState(timePerQuestion);
+        return Promise;
     }
 
-    function handleAnswerClick(e)
+    async function handleTimeFinishedWithOutAnswer() 
     {
-        e.preventDefault();
-        if(e.target.id === questions[countQuestion].correct_answer)
+        document.getElementById(questions[countQuestion].correct_answer).className += ' correctAnswer';      
+        let delayRes = await delay(2000);        
+        ref.current.clearState(timePerQuestion);
+        checkIfFinishedAndSetTurn();
+    }
+    
+    function checkIfFinishedAndSetTurn()
+    {      
+        const temp = turn + 1;        
+        if(temp === players.length)
         {
-            setScore(s => {
-                const newArr = s.slice();
-                newArr[turn] += 30;          
-                return newArr;
-              })
-              correctAnswerHandle(e);                          
-        }
-        else
-        {
-            incorrectAnswerHandle(e);            
-        }
-        if(turn + 1 === players.length)
-        {
-            setTurn(0);
-            setRound(round + 1);
-            
+            setTurn(0);            
+            round += 1;
+            if(round === 4)
+            {
+                finishedGame(score); 
+                return;
+            }
+            else
+            {
+                return round + 1;
+            }
         }
         else
         {
             setTurn(turn+1);
         }
-        if(round === 6)
+        setCountQuestion(countQuestion + 1);
+    }
+
+    async function handleAnswerClick(e)
+    {
+        e.preventDefault();
+        if(!clickedAnswer)
         {
-            ///end of game
-            setRound(0)
+            setClickedAnswer(true);
+            if(e.target.id === questions[countQuestion].correct_answer)
+            {
+                await correctAnswerHandle(e);                          
+            }
+            else
+            {
+                await incorrectAnswerHandle(e);                          
+            }
+            checkIfFinishedAndSetTurn();
         }
-        
     }
   return (
     <div className='gameContainer'>
@@ -131,7 +154,7 @@ const GameFlow = ({ players, questionsResult }) => {
             })}
         </div> 
         <div className='timeSection'>
-            <QuestionTimer ref={ref} time={timePerQuestion} id={countQuestion} handleTimeFinished={()=>{alert("end")}}></QuestionTimer>    
+            <QuestionTimer ref={ref} time={timePerQuestion} id={'timer' + countQuestion} handleTimeFinished={handleTimeFinishedWithOutAnswer}></QuestionTimer>    
         </div>   
     </div>
   )

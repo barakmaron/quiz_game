@@ -10,7 +10,6 @@ const QuestionTimer = ({time, id, handleTimeFinished}, ref) => {
         if(!milliSeconds) 
         {
             handleTimeFinished();
-            setMilliSeconds(time * 1000);
             return;
         }
 
@@ -21,7 +20,6 @@ const QuestionTimer = ({time, id, handleTimeFinished}, ref) => {
         return () => 
         {
             clearInterval(intervalIdMilliSeconds);
-            //setMilliSeconds(time * 1000);
         }
         
     }, [milliSeconds]);
@@ -37,10 +35,9 @@ const QuestionTimer = ({time, id, handleTimeFinished}, ref) => {
      });
   return (
     <>
-        <div ref={ref} className='clock'>
-            <span className='seconds'>{(milliSeconds / 1000) >> 0}</span>
-            :
-            <span className='milliSeconds'>{milliSeconds % 1000}</span>
+        <div ref={ref} value={milliSeconds} className='clock'>
+            <p className='time seconds'>{(milliSeconds / 1000) >> 0}:{milliSeconds % 100 < 10 ? '0' + milliSeconds % 100 : milliSeconds % 100}</p>
+            <p className='milliSeconds'></p>
         </div>
       <progress id={id} value={milliSeconds / 1000} max={time}></progress>
     </>
