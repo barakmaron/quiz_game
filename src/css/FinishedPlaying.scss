@@ -1,0 +1,44 @@
+.finishedPlaying
+{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.playerStats
+{
+    margin: 5px 10px;
+    padding: 10px 20px;
+    padding-right: 0;
+    width: 30%;
+}
+
+.playerStats:first-child
+{
+    border: none;
+}
+
+.playerStats h3 
+{
+    font-size: 4rem;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    width: fit-content;
+}
+
+.playerStats h3:nth-child(n),.playerStats span:nth-child(n)
+{
+    margin: 0 auto;
+}
+
+.playerStats span 
+{
+    font-size: 4rem;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    width: fit-content;
+}

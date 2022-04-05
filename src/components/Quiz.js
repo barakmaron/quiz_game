@@ -8,7 +8,7 @@ const state = [
     {state: 'game', visible: false}
 ];
 
-const Quiz = ({ players, difficulty, category }) => {
+const Quiz = ({ players, difficulty, category, finished }) => {
     const [render, rerender] = useState(false);
     const [questions, setQuestions] = useState([]);
 
@@ -27,17 +27,18 @@ const Quiz = ({ players, difficulty, category }) => {
 
         getQuestions()
     }, [difficulty, category, players]);
+
     function handlerStart ()
     {
-        rerender(!render);
         state[0].visible = false; 
-        state[1].visible = true;   
+        state[1].visible = true;
+        rerender(!render);   
     }
 
   return (
     <div>
         {state[0].visible && <QuizIntro players={players} startHandler={handlerStart}></QuizIntro>}
-        {state[1].visible && <GameFlow players={players} questionsResult={questions}></GameFlow>}
+        {state[1].visible && <GameFlow players={players} questionsResult={questions} finishedGame={finished}></GameFlow>}
     </div>
   )
 }
