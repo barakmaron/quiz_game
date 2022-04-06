@@ -22,7 +22,7 @@ const QuestionTimer = ({time, id, handleTimeFinished}, ref) => {
             clearInterval(intervalIdMilliSeconds);
         }
         
-    }, [milliSeconds]);
+    }, [milliSeconds, handleTimeFinished]);
 
     const clearState = (time) => {
         setMilliSeconds(time * 1000);

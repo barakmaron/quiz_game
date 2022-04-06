@@ -4,6 +4,7 @@ import { GiTrophy } from 'react-icons/gi';
 import Button from './Button';
 
 import '../css/FinishedPlaying.scss';
+import { SetPlayersInDataBase } from './ApiManager';
 
 const FinishedPlaying = ({players, score}) => {
     let place = '';
@@ -13,6 +14,7 @@ const FinishedPlaying = ({players, score}) => {
     const sortScoresToPlyersObjects = (players, score) =>
     {
         players.forEach((player, i) => {
+            sendScoresToServer(player.value, score[i]);
             setPlayersObj(s => {
                 if(s[0].name === '-1')
                     return[{name: player.value, score: score[i]}];
@@ -21,10 +23,15 @@ const FinishedPlaying = ({players, score}) => {
         });
         playersObj.sort((a, b) => a.score - b.score);
     };
+    const sendScoresToServer = async (name, score) => 
+    {
+        await SetPlayersInDataBase(name, score);
+    };
     useEffect(() => {
-        console.log(players)
         if(playersObj[0].name === '-1')
+        {
             sortScoresToPlyersObjects(players, score);
+        }
     }, [players, score]);
     
   return (<>

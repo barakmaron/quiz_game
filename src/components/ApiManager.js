@@ -12,3 +12,21 @@ export async function GetQuestions(difficulty, category, numQuestions)
     const data = await res.json(); 
     return data;
 }
+
+export async function GetLeaderBoard()
+{
+    const res = await fetch('http://localhost:8080/GetRequest.php');
+    const data = await res.json(); 
+    return data;
+}
+
+export async function SetPlayersInDataBase(playerName, score)
+{
+    const requestOptions = {
+        method: 'POST',
+        body: JSON.stringify({ player: playerName, score: score })
+    };
+    const res = await fetch('http://localhost:8080/PostRequest.php', requestOptions);
+    const data = await res.json(); 
+    return data;
+}
