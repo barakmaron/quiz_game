@@ -2,6 +2,7 @@ import { React, useState, useEffect } from 'react';
 import GameFlow from './GameFlow';
 import QuizIntro from './QuizIntro';
 import { GetQuestions } from './ApiManager';
+import { shuffleArray } from './Utilities';
 
 const state = [
     {state: 'intro', visible: true},
@@ -11,18 +12,27 @@ const state = [
 const Quiz = ({ players, difficulty, category, finished }) => {
     const [render, rerender] = useState(false);
     const [questions, setQuestions] = useState([]);
-
+    const numberOfRounds = 5;
     useEffect(() => {
         const getQuestions = async () => {
-            const data = await GetQuestions(difficulty, category, players.length);
+            let data = await GetQuestions(difficulty, category, players.length * numberOfRounds * 5);            
             if(data.response_code === 0)
             {
-                setQuestions(data.results);         
+                shuffleArray(data.results);
+                setQuestions(data.results);
+                return;
             }
             else
             {
-                ///show error
+                data = await GetQuestions(difficulty, category, players.length * numberOfRounds);
+                if(data.response_code === 0)
+                {
+                    shuffleArray(data.results);
+                    setQuestions(data.results);
+                    return;
+                }                
             }
+            // show error
         }
 
         getQuestions()
