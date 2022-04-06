@@ -52,7 +52,7 @@ const GameFlow = ({ players, questionsResult, finishedGame }) => {
             })                       
         }
         decodeQuestions();
-    }, []);   
+    }, [questionsResult, players]);   
 
     async function correctAnswerHandle(e) 
     {
@@ -62,9 +62,8 @@ const GameFlow = ({ players, questionsResult, finishedGame }) => {
             return newArr;
           })
         settings.soundEffect ? correctAnswerSound.play() : correctAnswerSound.pause();
-        let delayRes = await delay(500);
         e.target.parentElement.className += ' correctAnswer';        
-        delayRes = await delay(2000)
+        await delay(2000)
         setClickedAnswer(false);            
         correctAnswerSound.pause();
         ref.current.clearState(timePerQuestion);
@@ -74,10 +73,9 @@ const GameFlow = ({ players, questionsResult, finishedGame }) => {
     async function incorrectAnswerHandle(e) 
     {
         settings.soundEffect ? incorrectAnswerSound.play() : incorrectAnswerSound.pause();
-        let delayRes = await delay(500);
         e.target.parentElement.className += ' incorrectAnswer';
         document.getElementById(questions[countQuestion].correct_answer).className += ' correctAnswer';      
-        delayRes = await delay(2000);         
+        await delay(2000);         
         setClickedAnswer(false);
         incorrectAnswerSound.pause();
         ref.current.clearState(timePerQuestion);
@@ -87,12 +85,12 @@ const GameFlow = ({ players, questionsResult, finishedGame }) => {
     async function handleTimeFinishedWithOutAnswer() 
     {
         document.getElementById(questions[countQuestion].correct_answer).className += ' correctAnswer';      
-        let delayRes = await delay(2000);        
+        await delay(2000);        
         ref.current.clearState(timePerQuestion);
         checkIfFinishedAndSetTurn();
     }
     
-    function checkIfFinishedAndSetTurn()
+    function checkIfFinishedAndSetTurn(score)
     {      
         const temp = turn + 1;        
         if(temp === players.length)
@@ -126,7 +124,7 @@ const GameFlow = ({ players, questionsResult, finishedGame }) => {
             {
                 await incorrectAnswerHandle(e);                          
             }
-            checkIfFinishedAndSetTurn();
+            checkIfFinishedAndSetTurn(score);
         }
     }
   return (
@@ -147,6 +145,7 @@ const GameFlow = ({ players, questionsResult, finishedGame }) => {
                     const answers = q.answers.map((ans, j) =>{return(<Button addCostumeWidth='35%' color={color[j% 4]} key={j} text={ans} id={ans} onClick={handleAnswerClick}></Button>)})
                     return(<div key={i}><h3>{q.question}</h3><div  className='answers'>{answers}</div></div>)
                 }
+                return(<></>);
             })}
         </div> 
         <div className='timeSection'>

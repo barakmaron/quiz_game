@@ -6,6 +6,7 @@ import './App.css';
 import Header from './components/Header';
 import Game from './components/Game';
 import Footer from './components/Footer';
+import Leaderborad from './components/Leaderboard';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <div className='mainContent'>
           <Routes>
             <Route path='/game' element={<Game></Game>} />
+            <Route path='/leaderboard' element={<Leaderborad></Leaderborad>} />
           </Routes>
         </div>
         <Footer></Footer>
