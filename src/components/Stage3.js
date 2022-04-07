@@ -7,7 +7,7 @@ import Button from './Button';
 
 const Stage3 = ({ category }) => {
     const color = ['2eb952', '35afe9', 'bd35e9', 'e9a135', '8bb722', 'e93535', '355ce9']
-    const [categories, setCategories] = useState({ trivia_categories: []})
+    const [categories, setCategories] = useState(() => {return { trivia_categories: []}})
     useEffect(() => 
     {
        const getCategories = async () => {

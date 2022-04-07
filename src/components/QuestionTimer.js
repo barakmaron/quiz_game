@@ -3,7 +3,7 @@ import { React, useState, useEffect, useImperativeHandle, forwardRef } from 'rea
 import '../css/QuestionTimer.scss';
 
 const QuestionTimer = ({time, id, handleTimeFinished}, ref) => {
-    const [milliSeconds, setMilliSeconds] = useState(time * 1000);
+    const [milliSeconds, setMilliSeconds] = useState(() => time * 1000);
 
     useEffect(() => {
         
@@ -14,7 +14,7 @@ const QuestionTimer = ({time, id, handleTimeFinished}, ref) => {
         }
 
         const intervalIdMilliSeconds = setInterval(() => {
-            setMilliSeconds(milliSeconds - 1);
+            setMilliSeconds(milli => {return milli - 1});
         }, 1);
 
         return () => 
@@ -25,7 +25,7 @@ const QuestionTimer = ({time, id, handleTimeFinished}, ref) => {
     }, [milliSeconds, handleTimeFinished]);
 
     const clearState = (time) => {
-        setMilliSeconds(time * 1000);
+        setMilliSeconds(() => time * 1000);
       };
 
     useImperativeHandle(ref, () => {

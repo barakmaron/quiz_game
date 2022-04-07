@@ -10,8 +10,8 @@ const state = [
 ];
 
 const Quiz = ({ players, difficulty, category, finished }) => {
-    const [render, rerender] = useState(false);
-    const [questions, setQuestions] = useState([]);
+    const [render, rerender] = useState(() => false);
+    const [questions, setQuestions] = useState(() => []);
     const numberOfRounds = 5;
     useEffect(() => {
         const getQuestions = async () => {
@@ -32,7 +32,6 @@ const Quiz = ({ players, difficulty, category, finished }) => {
                     return;
                 }                
             }
-            // show error
         }
 
         getQuestions()

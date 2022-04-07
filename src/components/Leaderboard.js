@@ -1,18 +1,15 @@
 import { React, useEffect, useState} from 'react'
 import { GetLeaderBoard } from './ApiManager';
 
-let set = true;
+import '../css/Leaderboard.scss';
+import { GiTrophy } from 'react-icons/gi';
 
 const Leaderborad = () => {
-    const [board, setBoard] = useState([])
+    const top3colors = ['gold', 'silver', '#CD7F32'];
+    const [board, setBoard] = useState(() => []);
     useEffect(() => {
-        if(set)
-        {
-            const top10 = async () => {return await GetLeaderBoard()};
-            top10().then((res) => setBoard(res));
-            console.log(board);
-            set = false;
-        }
+        const top10 = async () => {return await GetLeaderBoard()};
+        top10().then((res) => setBoard(res));
     }, [board])
 
   return (
@@ -28,7 +25,7 @@ const Leaderborad = () => {
             <tbody>
                 {board.map((player,i) => {
                     return(<tr key={i}>
-                        <td>{i + 1}</td>
+                        <td>{i < 3 && <GiTrophy style={{color: top3colors[i]}}></GiTrophy>}{i + 1}</td>
                         <td>{player[1]}</td>
                         <td>{player[2]}</td>
                         </tr>)

@@ -1,6 +1,5 @@
 import { React, useState, useEffect, useRef } from 'react'
-import { FaStar, FaPlay, FaUserAstronaut, FaMusic } from 'react-icons/fa';
-import { AiFillSound } from 'react-icons/ai';
+import { FaStar, FaPlay, FaUserAstronaut } from 'react-icons/fa';
 import { Buffer } from 'buffer';
 import Button from './Button'
 import { delay, shuffleArray} from './Utilities.js'
@@ -19,13 +18,12 @@ const GameFlow = ({ players, questionsResult, finishedGame }) => {
 
     const ref = useRef(null);
 
-    const [score, setScore] = useState([]);
-    const [turn, setTurn] = useState(0);
-    const [countQuestion, setCountQuestion] = useState(0);
-    const [questions, setQuestions] = useState([{question: '-1', answers: []}]);
-    const [settings, setSettings] = useState({ soundEffect: true, backgroundSound: true});
+    const [score, setScore] = useState(() => []);
+    const [turn, setTurn] = useState(() => 0);
+    const [countQuestion, setCountQuestion] = useState(() => 0);
+    const [questions, setQuestions] = useState(() => []);
     const timePerQuestion = 30;
-    const [clickedAnswer, setClickedAnswer] = useState(false);    
+    const [clickedAnswer, setClickedAnswer] = useState(() => false);    
 
     useEffect(() =>
     {
@@ -45,8 +43,6 @@ const GameFlow = ({ players, questionsResult, finishedGame }) => {
                 answersBuffer.push(correctAns)
                 shuffleArray(answersBuffer);
                 setQuestions(s => {
-                    if(s[0].question === '-1')
-                        return [{question: questionBuffer, answers: answersBuffer, correct_answer: correctAns}]
                     return [...s, {question: questionBuffer, answers: answersBuffer, correct_answer: correctAns}]
                 })
             })                       
@@ -56,15 +52,14 @@ const GameFlow = ({ players, questionsResult, finishedGame }) => {
 
     async function correctAnswerHandle(e) 
     {
-        setScore(s => {
-            const newArr = s.slice();
-            newArr[turn] += (30 * document.getElementById('timer' + countQuestion).getAttribute('value')) >> 0;          
-            return newArr;
-          })
-        settings.soundEffect ? correctAnswerSound.play() : correctAnswerSound.pause();
+        setScore(oldScore => {
+            oldScore[turn] += (30 * document.getElementById('timer' + countQuestion).getAttribute('value')) >> 0;          
+            return oldScore;
+          });
+        correctAnswerSound.play();
         e.target.parentElement.className += ' correctAnswer';        
-        await delay(2000)
-        setClickedAnswer(false);            
+        await delay(2000);
+        setClickedAnswer(() => false);            
         correctAnswerSound.pause();
         ref.current.clearState(timePerQuestion);
         return Promise;
@@ -72,11 +67,11 @@ const GameFlow = ({ players, questionsResult, finishedGame }) => {
 
     async function incorrectAnswerHandle(e) 
     {
-        settings.soundEffect ? incorrectAnswerSound.play() : incorrectAnswerSound.pause();
+        incorrectAnswerSound.play();
         e.target.parentElement.className += ' incorrectAnswer';
         document.getElementById(questions[countQuestion].correct_answer).className += ' correctAnswer';      
         await delay(2000);         
-        setClickedAnswer(false);
+        setClickedAnswer(() => false); 
         incorrectAnswerSound.pause();
         ref.current.clearState(timePerQuestion);
         return Promise;
@@ -90,24 +85,25 @@ const GameFlow = ({ players, questionsResult, finishedGame }) => {
         checkIfFinishedAndSetTurn();
     }
     
-    function checkIfFinishedAndSetTurn(score)
+    async function checkIfFinishedAndSetTurn()
     {      
         const temp = turn + 1;        
         if(temp === players.length)
         {
-            setTurn(0);            
+            setTurn(() => 0);            
             round += 1;
             if(round === 5)
             {
+                await delay(500);
                 finishedGame(score); 
                 return;
             }            
         }
         else
         {
-            setTurn(turn+1);
+            setTurn(t => {return t+1});
         }
-        setCountQuestion(countQuestion + 1);
+        setCountQuestion(count => {return count + 1});
     }
 
     async function handleAnswerClick(e)
@@ -115,25 +111,23 @@ const GameFlow = ({ players, questionsResult, finishedGame }) => {
         e.preventDefault();
         if(!clickedAnswer)
         {
-            setClickedAnswer(true);
+            setClickedAnswer(() => true);
             if(e.target.id === questions[countQuestion].correct_answer)
             {
-                await correctAnswerHandle(e);                          
+                await correctAnswerHandle(e);
+                checkIfFinishedAndSetTurn();                          
             }
             else
             {
-                await incorrectAnswerHandle(e);                          
+                await incorrectAnswerHandle(e);  
+                checkIfFinishedAndSetTurn();                        
             }
-            checkIfFinishedAndSetTurn(score);
+            
         }
     }
   return (
     <div className='gameContainer'>
-        <div className='gameStatistics'>
-            <div className='settings'>
-                <AiFillSound style={{color: '#fd5252', cursor: 'pointer'}}></AiFillSound>
-                <FaMusic style={{color: '#fd5252', cursor: 'pointer'}}></FaMusic>
-            </div>
+        <div className='gameStatistics'>            
             <div className='playerName'><FaUserAstronaut style={{color: '#009fff'}}></FaUserAstronaut> {players[turn].value}</div>
             <div className='score'><FaStar style={{color: '#ffed00'}}></FaStar> {score[turn]}</div>
             <div className='round'><FaPlay style={{color: '#18ab46'}}></FaPlay> {round + 1}/5</div>    
@@ -145,7 +139,7 @@ const GameFlow = ({ players, questionsResult, finishedGame }) => {
                     const answers = q.answers.map((ans, j) =>{return(<Button addCostumeWidth='35%' color={color[j% 4]} key={j} text={ans} id={ans} onClick={handleAnswerClick}></Button>)})
                     return(<div key={i}><h3>{q.question}</h3><div  className='answers'>{answers}</div></div>)
                 }
-                return(<></>);
+                return(<div key={i}></div>);
             })}
         </div> 
         <div className='timeSection'>
