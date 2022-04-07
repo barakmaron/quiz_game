@@ -17,12 +17,11 @@ const stages = [
   ];
 
 const Game = () => {
-  const [render, rerender] = useState(false);
-  const [players, setPlayers] = useState([]);
-  const [difficulty, setDifficulty] = useState('');
-  const [category, setCategory] = useState(0);
-  const [score, setScore] = useState([0]);
-  const [playAgain, setPlayAgain] = useState(false)
+  const [render, rerender] = useState(() => false);
+  const [players, setPlayers] = useState(() => []);
+  const [difficulty, setDifficulty] = useState(() => '');
+  const [category, setCategory] = useState(() => 0);
+  const [score, setScore] = useState(() => []);
 
   const addPlayers = (playersNames) => 
   {
@@ -66,7 +65,7 @@ const Game = () => {
       {stages[0].visible && <Stage1 setPlayersNames={addPlayers}></Stage1>}
       {stages[1].visible && <Stage2 difficulty={handlerDifficulty}></Stage2>}
       {stages[2].visible && <Stage3 category={handlerCategory}></Stage3>}
-      {stages[3].visible && <Quiz category={category} difficulty={difficulty} players={players} finished={handlerGameFinished} playAgain={playAgain}></Quiz>}
+      {stages[3].visible && <Quiz category={category} difficulty={difficulty} players={players} finished={handlerGameFinished}></Quiz>}
       {stages[4].visible && <FinishedPlaying players={players} score={score}></FinishedPlaying>}
     </div>
   )
