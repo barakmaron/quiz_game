@@ -54,8 +54,8 @@ const Stage1 = ({ setPlayersNames }) => {
             {playerNamesInput.map((item, i) => {
                 const placeholder = "Player " + (i + 1) + " Name";
                 return(<span key={i} name={item.name}>
-                    <input type="text" key={i} id={'input'+i} onChange={handleChange} placeholder={placeholder} />
-                    { i != 0 && <span name={item.name} onClick={deletePlayerName}><FaTimes name={item.name} onClick={deletePlayerName} style={{color: '#ff7045', fontSize: '1.5em', cursor: 'pointer'}}></FaTimes></span>}
+                    <input type="text" key={i} id={i} onChange={handleChange} placeholder={placeholder} />
+                    { i !== 0 && <span name={item.name} onClick={deletePlayerName}><FaTimes name={item.name} onClick={deletePlayerName} style={{color: '#ff7045', fontSize: '1.5em', cursor: 'pointer'}}></FaTimes></span>}
                     </span>);
             })}
             <Button text="Add player" color='66dd50'  onClick={addPlayerInput}></Button>

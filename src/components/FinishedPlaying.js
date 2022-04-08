@@ -10,7 +10,7 @@ const FinishedPlaying = ({players, score}) => {
     const color = ['2eb952', '35afe9', 'bd35e9', 'e9a135', '8bb722', 'e93535', '355ce9'];
     const top3Colors = ['gold', 'silver', '#CD7F32'];
     const [playersObj, setPlayersObj] = useState(() => []);
-    const sortScoresToPlyersObjects = (players, score) =>
+    function sortScoresToPlyersObjects(players, score)
     {
         players.forEach((player, i) => {
             
@@ -26,7 +26,7 @@ const FinishedPlaying = ({players, score}) => {
         await SetPlayersInDataBase(name, score);
     };
     useEffect(() => {
-            sortScoresToPlyersObjects(players, score);
+      sortScoresToPlyersObjects(players, score);
     }, [players, score]);
     
   return (<>
