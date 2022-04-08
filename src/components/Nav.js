@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import '../css/Nav.scss'
 
 const Nav = () => {
-  const [directories, setDirectories] = useState(() => ['intro', 'game', 'leaderboard',  'how%20to%20play']);
+  const [directories] = useState(() => ['intro', 'game', 'leaderboard',  'how%20to%20play']);
   const location = useLocation().pathname;
 
   return (
@@ -18,10 +18,10 @@ const Nav = () => {
         {
           if(location.substring(1) === url)
           {
-            url === 'how%20to%20play' ? url = 'how to play' : url = url;
+            url = url === 'how%20to%20play' ? 'how to play' : url;
             return(<Link key={i} to={"/" + url} className="nav-link active"><span className="nav-link-span"><span className="u-nav">{url}</span></span></Link>);
           }
-          url === 'how%20to%20play' ? url = 'how to play' : url = url;
+          url = url === 'how%20to%20play' ? 'how to play' : url;
           return(<Link key={i} to={"/" + url} className="nav-link"><span className="nav-link-span"><span className="u-nav">{url}</span></span></Link>);
         })
         }
