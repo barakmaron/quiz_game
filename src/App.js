@@ -28,6 +28,20 @@ function App() {
             }/>
             <Route path='/game' element={<Game></Game>} />
             <Route path='/leaderboard' element={<Leaderborad></Leaderborad>} />
+            <Route path='/howtoplay' element={
+              <div className='intro'>
+                <h2>HOW TO PLAY?</h2>
+                <p>
+                  Go to the game page, then enter your name you can add more player to play against each other by clicking the add player button.
+                </p>
+                <br></br>
+                <p>After you add all players name click start. Now you will need to chose a difficulty level, and a category.</p>
+                <br></br>
+                <p>Start answering the questions as they come, each player in his turn. You will get scored for a correct answer based on how fast you answered.</p>
+                <br></br>
+                <p>Each player will get 5 questions (5 rounds)</p>
+              </div>
+            }></Route>
           </Routes>
         </div>
         <Footer></Footer>
