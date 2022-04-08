@@ -10,24 +10,25 @@ const FinishedPlaying = ({players, score}) => {
     const color = ['2eb952', '35afe9', 'bd35e9', 'e9a135', '8bb722', 'e93535', '355ce9'];
     const top3Colors = ['gold', 'silver', '#CD7F32'];
     const [playersObj, setPlayersObj] = useState(() => []);
-    const sortScoresToPlyersObjects = (players, score) =>
-    {
-        players.forEach((player, i) => {
-            
-            sendScoresToServer(player.value, score[i]);
-            setPlayersObj(s => {
-                return[...s, {name: player.value, score: score[i]}];
-            });
-        });
-        playersObj.sort((a, b) => a.score - b.score);
-    };
+    
     const sendScoresToServer = async (name, score) => 
     {
         await SetPlayersInDataBase(name, score);
     };
     useEffect(() => {
-            sortScoresToPlyersObjects(players, score);
-    }, [players, score]);
+      function sortScoresToPlyersObjects(players, score)
+      {
+          players.forEach((player, i) => {
+              
+              sendScoresToServer(player.value, score[i]);
+              setPlayersObj(s => {
+                  return[...s, {name: player.value, score: score[i]}];
+              });
+          });
+          playersObj.sort((a, b) => a.score - b.score);
+      };
+      sortScoresToPlyersObjects(players, score);
+    }, [players, score, playersObj]);
     
   return (<>
     <div className='finishedPlaying'>        
