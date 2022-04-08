@@ -7,10 +7,15 @@ import { GiTrophy } from 'react-icons/gi';
 const Leaderborad = () => {
     const top3colors = ['gold', 'silver', '#CD7F32'];
     const [board, setBoard] = useState(() => []);
+    const [render, setRender] = useState(() => false);
     useEffect(() => {
-        const top10 = async () => {return await GetLeaderBoard()};
-        top10().then((res) => setBoard(res));
-    }, [board])
+        if(!render)
+        {
+            const top10 = async () => {return await GetLeaderBoard()};
+            top10().then((res) => setBoard(res));
+            setRender(true);
+        }
+    }, [render])
 
   return (
     <div className='leaderborad'>
