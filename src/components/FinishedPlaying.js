@@ -10,6 +10,7 @@ const FinishedPlaying = ({players, score}) => {
     const color = ['2eb952', '35afe9', 'bd35e9', 'e9a135', '8bb722', 'e93535', '355ce9'];
     const top3Colors = ['gold', 'silver', '#CD7F32'];
     const [playersObj, setPlayersObj] = useState(() => []);
+    const [render, setRender] = useState(() => false);
     
     const sendScoresToServer = async (name, score) => 
     {
@@ -27,8 +28,12 @@ const FinishedPlaying = ({players, score}) => {
           });
           playersObj.sort((a, b) => a.score - b.score);
       };
-      sortScoresToPlyersObjects(players, score);
-    }, [players, score, playersObj]);
+      if(!render)
+      {
+        sortScoresToPlyersObjects(players, score);
+        setRender(true);
+      }
+    }, [players, score, playersObj, render]);
     
   return (<>
     <div className='finishedPlaying'>        
