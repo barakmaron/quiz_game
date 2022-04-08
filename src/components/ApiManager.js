@@ -18,6 +18,7 @@ export async function GetLeaderBoard()
     const res = await fetch('https://quizgameproject.000webhostapp.com/GetRequest.php');
     const data = await res.json(); 
     return data;
+    
 }
 
 export async function SetPlayersInDataBase(playerName, score)
