@@ -19,11 +19,11 @@ function App() {
             <Route path='/intro' element={
               <div className='intro'>
                 <h2>INTRO</h2>
-                <p>This is my first project built in react, it was a great experience building, testing and learning.
-                  Hope you will have fun playing the game as much as i had building it.
+                <p>This is my first project I ever build in React. It was a great experience building, testing and learning.
+                  I hope you will have fun playing this game as much as I had when building it.
                 </p>
                 <br></br>
-                <p>The Server (backend) is a very simple php script that manages posting scores and name to the database as well as getting the TOP 10 players from the database.</p>
+                <p>The Server (backend) is a very simple php script that posts scores and name to the database as well as getting the TOP 10 players from the database.</p>
               </div>
             }/>
             <Route path='/game' element={<Game></Game>} />
@@ -32,10 +32,10 @@ function App() {
               <div className='intro'>
                 <h2>HOW TO PLAY?</h2>
                 <p>
-                  Go to the game page, then enter your name you can add more player to play against each other by clicking the add player button.
+                  Go to the game page, then enter your name, you can add more players to play against, by clicking the add player button.
                 </p>
                 <br></br>
-                <p>After you add all players name click start. Now you will need to chose a difficulty level, and a category.</p>
+                <p>After you add all the players names click start. Now you will need to chose a difficulty level, and a category.</p>
                 <br></br>
                 <p>Start answering the questions as they come, each player in his turn. You will get scored for a correct answer based on how fast you answered.</p>
                 <br></br>
