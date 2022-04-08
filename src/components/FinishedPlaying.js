@@ -16,8 +16,9 @@ const FinishedPlaying = ({players, score}) => {
     {
         await SetPlayersInDataBase(name, score);
     };
+    
     useEffect(() => {
-      function sortScoresToPlyersObjects(players, score)
+      const sortScoresToPlyersObjects = (players, score) =>
       {
           players.forEach((player, i) => {
               
@@ -33,7 +34,7 @@ const FinishedPlaying = ({players, score}) => {
         sortScoresToPlyersObjects(players, score);
         setRender(true);
       }
-    }, [players, score, playersObj, render]);
+    }, [players, score, render, playersObj]);
     
   return (<>
     <div className='finishedPlaying'>        
