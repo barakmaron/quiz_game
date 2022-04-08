@@ -1,9 +1,9 @@
 import { React, useState }  from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import '../css/Nav.scss'
 
 const Nav = () => {
-  const [directories, setDirectories] = useState(() => ['intro', 'game', 'leaderboard',  'how to play']);
+  const [directories, setDirectories] = useState(() => ['intro', 'game', 'leaderboard',  'how%20to%20play']);
   const location = useLocation().pathname;
 
   return (
@@ -17,8 +17,12 @@ const Nav = () => {
         {directories.map((url,i) =>
         {
           if(location.substring(1) === url)
-            return(<a key={i} href={"/" + url} className="nav-link active"><span className="nav-link-span"><span className="u-nav">{url}</span></span></a>);
-          return(<a key={i} href={"/" + url} className="nav-link"><span className="nav-link-span"><span className="u-nav">{url}</span></span></a>);
+          {
+            url === 'how%20to%20play' ? url = 'how to play' : url = url;
+            return(<Link key={i} to={"/" + url} className="nav-link active"><span className="nav-link-span"><span className="u-nav">{url}</span></span></Link>);
+          }
+          url === 'how%20to%20play' ? url = 'how to play' : url = url;
+          return(<Link key={i} to={"/" + url} className="nav-link"><span className="nav-link-span"><span className="u-nav">{url}</span></span></Link>);
         })
         }
       </div>

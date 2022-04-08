@@ -1,5 +1,5 @@
 import { React}  from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate} from "react-router-dom";
+import { HashRouter as Router, Route, Navigate, Routes} from "react-router-dom";
 
 import './App.css';
 
@@ -10,7 +10,7 @@ import Leaderborad from './components/Leaderboard';
 
 function App() {
   return (
-    <Router>
+    <Router >
       <div className="container">
         <Header></Header> 
         <div className='mainContent'>
@@ -28,7 +28,7 @@ function App() {
             }/>
             <Route path='/game' element={<Game></Game>} />
             <Route path='/leaderboard' element={<Leaderborad></Leaderborad>} />
-            <Route path='/howtoplay' element={
+            <Route path='/how%20to%20play' element={
               <div className='intro'>
                 <h2>HOW TO PLAY?</h2>
                 <p>
@@ -42,7 +42,7 @@ function App() {
                 <p>Each player will get 5 questions (5 rounds)</p>
               </div>
             }></Route>
-          </Routes>
+            </Routes>
         </div>
         <Footer></Footer>
       </div>      
