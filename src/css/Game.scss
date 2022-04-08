@@ -32,3 +32,10 @@ body
     -webkit-font-smoothing: antialiased;
     background-position: 5em 15em; 
 }
+
+@media (max-width: 800px) {
+    .title
+    {
+        font-size: 5rem;
+    }
+}

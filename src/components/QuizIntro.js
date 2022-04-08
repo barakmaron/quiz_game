@@ -18,7 +18,7 @@ const QuizIntro = ({ players, startHandler }) => {
          here are some ground roles...</h2>
         <p>Each player will get 30 seconds to answer.</p>
         <p>You can use each help only once.</p>
-        <p>The game consist 5 rounds, you will get scoured for each correct answer.</p>
+        <p>The game consist 5 rounds, you will get points for each correct answer.</p>
         <h3>Lets start the FUNNNNNNNNN!!!</h3>
 
         <Button text='Lets go' onClick={handleStart}></Button>
