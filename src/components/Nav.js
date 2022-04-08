@@ -1,9 +1,9 @@
-import { React, useEffect, useState }  from 'react';
+import { React, useState }  from 'react';
 import { useLocation } from 'react-router-dom';
 import '../css/Nav.scss'
 
 const Nav = () => {
-  const [directories, setDirectories] = useState(() => ['game', 'leaderboard',  'how to play']);
+  const [directories, setDirectories] = useState(() => ['intro', 'game', 'leaderboard',  'how to play']);
   const location = useLocation().pathname;
 
   return (
