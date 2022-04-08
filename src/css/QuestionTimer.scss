@@ -1,0 +1,46 @@
+progress
+{
+    width: 90%;
+    height: 2rem;
+    -webkit-appearance: none;    
+}
+
+progress::-webkit-progress-bar 
+{
+    
+    background-color: #fff;
+    border: 2px solid;
+    border-color: #bd85cb;
+    border-radius: 50px;
+}
+progress::-webkit-progress-value 
+{
+
+    background: linear-gradient(37deg, #bd35e9, #bd362f);
+    border-radius: 50px;
+}
+
+progress::-moz-progress-bar 
+{
+    background: linear-gradient(37deg, #bd35e9, #bd362f);
+    border-radius: 50px;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+.clock {
+    font-family: 'Share Tech Mono', monospace;
+    color: #ffffff;
+    text-align: center;
+    background: linear-gradient(65deg, #bd35e9, #bd362f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px #ffffff,  0 0 20px rgba(10, 175, 230, 0);
+}
+.time {
+    letter-spacing: 0.05em;
+    font-size: 80px;
+    padding: 5px 0;
+}

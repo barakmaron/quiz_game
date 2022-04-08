@@ -1,0 +1,82 @@
+.gameStatistics
+{
+    font-size: 2rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-end;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 5px 15px;
+}
+
+.questionSection
+{
+    margin: 0 auto;
+}
+
+.questionSection h3
+{
+    font-size: 1.5rem;  
+    white-space: initial;  
+}
+
+.answers
+{
+    display: inline-flex;
+    justify-items: start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: center;
+    padding: 0px 10px;
+}
+
+.answers button
+{
+    margin: 10px 5px;
+}
+
+.correctAnswer
+{
+    background: linear-gradient(37deg, #35e98e, #167e06) !important;
+    position: relative;
+    animation-name: pulse;
+    animation-duration: 0.5s;
+    animation-iteration-count: 2;
+    animation-direction: alternate-reverse;
+}
+
+.correctAnswer .buttonColoring
+{
+    background: linear-gradient(37deg, #35e98e, #167e06) !important;
+}
+@keyframes pulse
+{
+    25%  {transform: scale(0.9);}
+    75%  {transform: scale(1.1);}
+}
+
+.incorrectAnswer
+{
+    background: linear-gradient(37deg, #dd5050, #7e0606) !important;
+    position: relative;
+    animation-name: horizontalShaking;
+    animation-duration: 0.5s;
+    animation-iteration-count: 2;
+    animation-direction: alternate-reverse;
+}
+
+.incorrectAnswer .buttonColoring
+{
+    background: linear-gradient(37deg, #dd5050, #7e0606) !important;
+}
+
+@keyframes horizontalShaking 
+{
+    0% { transform: translateX(0) }
+    25% { transform: translateX(5px) }
+    50% { transform: translateX(-5px) }
+    75% { transform: translateX(5px) }
+    100% { transform: translateX(0) }
+}
