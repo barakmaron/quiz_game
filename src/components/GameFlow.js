@@ -1,10 +1,12 @@
 import { React, useState, useEffect, useRef } from 'react'
 import { FaStar, FaPlay, FaUserAstronaut } from 'react-icons/fa';
+import { RiScissorsCutFill } from 'react-icons/ri';
+import { MdOutlineTimer } from 'react-icons/md';
 import { Buffer } from 'buffer';
-import Button from './Button'
-import { delay, shuffleArray} from './Utilities.js'
+import Button from './Button';
+import { delay, shuffleArray} from './Utilities.js';
 
-import '../css/GameFlow.scss'
+import '../css/GameFlow.scss';
 import CorrectSound from '../assets/CorrectAnswerSound.mp3';
 import IncorrectSound from '../assets/IncorrectAnswerSound.mp3';
 import QuestionTimer from './QuestionTimer';
@@ -19,6 +21,7 @@ const GameFlow = ({ players, questionsResult, finishedGame }) => {
     const ref = useRef(null);
 
     const [score, setScore] = useState(() => []);
+    const [helpers, setHelpers] = useState(() => []);
     const [turn, setTurn] = useState(() => 0);
     const [countQuestion, setCountQuestion] = useState(() => 0);
     const [questions, setQuestions] = useState(() => []);
@@ -35,7 +38,10 @@ const GameFlow = ({ players, questionsResult, finishedGame }) => {
         }
         players.forEach(player => {
             setScore(s => {
-                return [...s, 0]
+                return [...s, 0];
+            });
+            setHelpers(s => {
+                return [...s, {cut50: true, addTime: true}];
             });
         });
         const decodeQuestions = () => {
@@ -53,8 +59,39 @@ const GameFlow = ({ players, questionsResult, finishedGame }) => {
                 })
             })                       
         }
+        windowResize();
         decodeQuestions();
     }, [questionsResult, players]);   
+
+    function addTimeFunction(e)
+    {
+        e.target.className += ' disabled';
+        if(helpers.length > 0 && helpers[turn].addTime)
+        {
+            setHelpers(s => {
+                    s[turn].addTime = false;
+                    return s;
+            });
+            ref.current.clearState(timePerQuestion);
+        }
+    };
+
+    function cut50Function(e)
+    {
+        e.preventDefault();
+        if(helpers.length > 0 && helpers[turn].cut50)
+        {
+            e.target.className += ' disabled';
+            setHelpers(s => {
+                    s[turn].cut50 = false;
+                    return s;
+            });
+            let incorrectAnswers = questions[countQuestion].answers;
+            incorrectAnswers = incorrectAnswers.filter(answer => answer !== questions[countQuestion].correct_answer); 
+            document.getElementById(incorrectAnswers[0]).className += ' dontShowAnswer';
+            document.getElementById(incorrectAnswers[1]).className += ' dontShowAnswer';
+        }
+    };
 
     async function correctAnswerHandle(e) 
     {
@@ -149,8 +186,23 @@ const GameFlow = ({ players, questionsResult, finishedGame }) => {
             })}
         </div> 
         <div className='timeSection'>
-            <QuestionTimer ref={ref} time={timePerQuestion} id={'timer' + countQuestion} handleTimeFinished={handleTimeFinishedWithOutAnswer}></QuestionTimer>    
+            <QuestionTimer ref={ref} time={timePerQuestion} id={'timer' + countQuestion} setTimerHelp="false" handleTimeFinished={handleTimeFinishedWithOutAnswer}></QuestionTimer>    
         </div>   
+       {helpers.map((help, i) => {
+           if(i === turn)
+           {
+               return(<div key={'helps' + i} className='helpers'>
+               <div className={help.cut50 ? 'cut50' : 'cut50 disabled'} onClick={cut50Function}>
+                   <RiScissorsCutFill></RiScissorsCutFill>
+               </div>
+               <div className={help.addTime ? 'addTime' : 'addTime disabled'} onClick={addTimeFunction}>
+                   <MdOutlineTimer></MdOutlineTimer>
+               </div>
+               </div>);
+           }
+           return(<div key={i}></div>);
+       })} 
+        
     </div>
   )
 }

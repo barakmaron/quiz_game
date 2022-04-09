@@ -23,6 +23,8 @@ function App() {
                   I hope you will have fun playing this game as much as I had when building it.
                 </p>
                 <br></br>
+                <p>This site is mobile friendly.</p>
+                <br></br>
                 <p>The Server (backend) is a very simple php script that posts scores and name to the database as well as getting the TOP 10 players from the database.</p>
               </div>
             }/>
@@ -40,6 +42,8 @@ function App() {
                 <p>Start answering the questions as they come, each player in his turn. You will get scored for a correct answer based on how fast you answered.</p>
                 <br></br>
                 <p>Each player will get 5 questions (5 rounds)</p>
+                <br></br>
+                <h3>Dont forget to enjoy.</h3>
               </div>
             }></Route>
           </Routes>
