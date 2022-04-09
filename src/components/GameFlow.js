@@ -24,9 +24,15 @@ const GameFlow = ({ players, questionsResult, finishedGame }) => {
     const [questions, setQuestions] = useState(() => []);
     const timePerQuestion = 30;
     const [clickedAnswer, setClickedAnswer] = useState(() => false);    
+    const [mobile, setMobile] = useState(() => true);
 
     useEffect(() =>
     {
+        const windowResize = () => {
+            if (window.innerWidth > 800) {
+                setMobile(false);
+            }
+        }
         players.forEach(player => {
             setScore(s => {
                 return [...s, 0]
@@ -136,7 +142,7 @@ const GameFlow = ({ players, questionsResult, finishedGame }) => {
             {questions.map((q, i) => {
                 if(countQuestion === i)
                 {
-                    const answers = q.answers.map((ans, j) =>{return(<Button addCostumeWidth='35%' color={color[j% 4]} key={j} text={ans} id={ans} onClick={handleAnswerClick}></Button>)})
+                    const answers = q.answers.map((ans, j) =>{return(<Button addCostumeWidth={!mobile ? '35%' : '100%'} color={color[j% 4]} key={j} text={ans} id={ans} onClick={handleAnswerClick}></Button>)})
                     return(<div key={i}><h3>{q.question}</h3><div  className='answers'>{answers}</div></div>)
                 }
                 return(<div key={i}></div>);
