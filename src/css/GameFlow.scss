@@ -72,6 +72,57 @@
     background: linear-gradient(37deg, #dd5050, #7e0606) !important;
 }
 
+.helpers
+{
+    font-size: 2em;
+    color: #fff;
+    display: flex;
+    padding: 10px 0;
+}
+.cut50, .addTime
+{
+    width: 3em;
+    height: 3em;
+    background: linear-gradient(37deg, #35e98e, #167e06);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 150px;
+    margin: 0 auto;
+    border:1px solid #1bff81;
+}
+
+.cut50
+{
+    background: linear-gradient(37deg, rgb(189, 53, 233), rgb(189, 54, 47));
+    border:1px solid #ff1ba4;
+}
+
+.cut50:hover, .addTime:hover
+{
+    color: #000;
+}
+
+.disabled
+{
+    background: linear-gradient(
+        37deg, #545454, #a3a3a3) !important;
+    border: 1px solid #999999;
+    box-shadow: inset 0px 0px 86px 0px #181818;
+    cursor: not-allowed;
+}
+
+.dontShowAnswer .buttonColoring
+{
+    background: linear-gradient(
+        37deg, #545454, #a3a3a3) !important;
+    border: 1px solid #999999;
+    box-shadow: inset 0px 0px 86px 0px #181818;
+    cursor: not-allowed;
+}
+
 @keyframes horizontalShaking 
 {
     0% { transform: translateX(0) }

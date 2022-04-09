@@ -42,3 +42,11 @@
     align-items: center;
     width: fit-content;
 }
+
+
+@media (max-width: 800px) {
+    .playerStats
+    {
+        width: unset;
+    }
+}

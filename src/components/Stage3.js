@@ -6,15 +6,23 @@ import GetCategories from './ApiManager'
 import Button from './Button';
 
 const Stage3 = ({ category }) => {
-    const color = ['2eb952', '35afe9', 'bd35e9', 'e9a135', '8bb722', 'e93535', '355ce9']
-    const [categories, setCategories] = useState(() => {return { trivia_categories: []}})
+    const color = ['2eb952', '35afe9', 'bd35e9', 'e9a135', '8bb722', 'e93535', '355ce9'];
+    const [categories, setCategories] = useState(() => {return { trivia_categories: []}});
+    const [mobile, setMobile] = useState(() => true);
+    
     useEffect(() => 
     {
+      const windowResize = () => {
+        if (window.innerWidth > 800) {
+          setMobile(false);
+        }
+      }
        const getCategories = async () => {
             const getCat = await GetCategories();
             setCategories(getCat);
        };
        getCategories();
+       windowResize();
     }, []);
     
     const handleCategorySelection = (e) =>
@@ -32,7 +40,7 @@ const Stage3 = ({ category }) => {
             position = position === -1 && cat.name.search('Science:') === 0 ? 9 : position;
             cat.name = position !== -1 ? cat.name.substr(position) : cat.name;
             
-            return(<Button key={i} addCostumeWidth='20%' text={cat.name} id={cat.id} color={color[i % 7]} onClick={handleCategorySelection}></Button>);
+            return(<Button key={i} addCostumeWidth={!mobile ? '20%' : '100%'} text={cat.name} id={cat.id} color={color[i % 7]} onClick={handleCategorySelection}></Button>);
         })}
       </div>
     </div>
