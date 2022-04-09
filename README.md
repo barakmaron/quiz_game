@@ -1,7 +1,7 @@
 # Description
 This is a React based project of a quiz game with php backend server for managing mysql database.
 
-# Depandcy
+# Dependency
 Php
 mysql server
 
