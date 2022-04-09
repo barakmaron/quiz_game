@@ -2,7 +2,7 @@
      ini_set('display_errors', 'on');     
      date_default_timezone_set("Asia/Jerusalem");
      header("Content-Type: text/html; charset=utf-8");
-     $mysqli = new mysqli("127.0.0.1", 'QuizGameProject', '@%)je/}G@lx1s!UB');
+     $mysqli = new mysqli("HOST_IP", 'USER_NAME', 'PASSWORD');
      $mysqli->set_charset('utf8');
      if($mysqli == false)
         die("ERROR: Could not connect. " . mysqli_connect_error());
