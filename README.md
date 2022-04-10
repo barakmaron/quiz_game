@@ -19,9 +19,9 @@ $db_selected = $mysqli->select_db('DATABASE_NAME');
 
 > Line 18: 
 ```javascript 
-const res = await fetch('https://URL_OF_YOU_SITE/GetRequest.php');
+const res = await fetch('https://URL_OF_YOUR_SERVER/GetRequest.php');
 ```
 > Line 30: 
 ```javascript 
-const res = await fetch('https://URL_OF_YOU_SITE/PostRequest.php', requestOptions);
+const res = await fetch('https://URL_OF_YOUR_SERVER/PostRequest.php', requestOptions);
 ```
